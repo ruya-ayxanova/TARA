@@ -1,0 +1,19 @@
+name: infinity_browser
+description: Hızlı, reklam engelleyici ve medya indirme destekli tarayıcı.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_inappwebview: ^6.0.0
+  dio: ^5.4.0
+  path_provider: ^2.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
