@@ -13,7 +13,7 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.27.4'
       - run: flutter create --platforms=android,ios --project-name infinity_browser .
       - name: INTERNET izni ekle
         run: sed -i 's#<application#<uses-permission android:name="android.permission.INTERNET"/>\n    <application#' android/app/src/main/AndroidManifest.xml
