@@ -12,6 +12,9 @@ dependencies:
   flutter_inappwebview: ^6.0.0
   dio: ^5.4.0
   path_provider: ^2.1.0
+  shared_preferences: ^2.3.0
+  share_plus: ^10.1.4
+  open_filex: ^4.6.0
 
 flutter:
   uses-material-design: true
