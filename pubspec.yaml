@@ -1,5 +1,5 @@
-name: infinity_browser
-description: Hızlı, reklam engelleyici ve medya indirme destekli tarayıcı.
+name: tara
+description: Tara - hızlı, reklam engelleyici ve medya indirme destekli tarayıcı.
 publish_to: none
 version: 1.0.0+1
 
@@ -15,6 +15,15 @@ dependencies:
   shared_preferences: ^2.3.0
   share_plus: ^10.1.4
   open_filex: ^4.6.0
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icon.png
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
