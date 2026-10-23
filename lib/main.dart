@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:media_kit/media_kit.dart';
 import 'files_page.dart';
 import 'player_page.dart';
 import 'store.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  MediaKit.ensureInitialized();
   runApp(const InfinityApp());
 }
 
