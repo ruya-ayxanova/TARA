@@ -15,9 +15,8 @@ dependencies:
   shared_preferences: ^2.3.0
   share_plus: ^10.1.4
   open_filex: ^4.6.0
-  media_kit: ^1.1.11
-  media_kit_video: ^1.2.4
-  media_kit_libs_video: ^1.0.5
+  video_player: ^2.9.2
+  chewie: ^1.8.5
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.1
