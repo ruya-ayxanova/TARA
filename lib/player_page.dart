@@ -1,6 +1,7 @@
+import 'dart:io';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:video_player/video_player.dart';
 
 class PlayerPage extends StatefulWidget {
   final String source; // dosya yolu veya internet adresi
@@ -13,22 +14,46 @@ class PlayerPage extends StatefulWidget {
 }
 
 class _PlayerPageState extends State<PlayerPage> {
-  late final Player player = Player();
-  late final VideoController controller = VideoController(player);
+  VideoPlayerController? vc;
+  ChewieController? cc;
+  String? error;
 
   @override
   void initState() {
     super.initState();
-    final isUrl = widget.source.startsWith('http');
-    player.open(Media(widget.source,
-        httpHeaders: isUrl && widget.referer != null && widget.referer!.isNotEmpty
-            ? {'Referer': widget.referer!}
-            : null));
+    _init();
+  }
+
+  Future<void> _init() async {
+    try {
+      final isUrl = widget.source.startsWith('http');
+      final c = isUrl
+          ? VideoPlayerController.networkUrl(
+              Uri.parse(widget.source),
+              httpHeaders: {
+                if (widget.referer != null && widget.referer!.isNotEmpty)
+                  'Referer': widget.referer!,
+              },
+            )
+          : VideoPlayerController.file(File(widget.source));
+      await c.initialize();
+      vc = c;
+      cc = ChewieController(
+        videoPlayerController: c,
+        autoPlay: true,
+        allowedScreenSleep: false,
+        playbackSpeeds: const [0.5, 0.75, 1.0, 1.25, 1.5, 2.0],
+      );
+      if (mounted) setState(() {});
+    } catch (e) {
+      if (mounted) setState(() => error = 'Oynatılamadı: $e');
+    }
   }
 
   @override
   void dispose() {
-    player.dispose();
+    cc?.dispose();
+    vc?.dispose();
     super.dispose();
   }
 
@@ -39,17 +64,16 @@ class _PlayerPageState extends State<PlayerPage> {
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
           title: Text(widget.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-          actions: [
-            PopupMenuButton<double>(
-              icon: const Icon(Icons.speed),
-              onSelected: (v) => player.setRate(v),
-              itemBuilder: (_) => [
-                for (final v in [0.5, 0.75, 1.0, 1.25, 1.5, 2.0])
-                  PopupMenuItem(value: v, child: Text('${v}x')),
-              ],
-            ),
-          ],
         ),
-        body: Video(controller: controller),
+        body: error != null
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(error!, style: const TextStyle(color: Colors.white)),
+                ),
+              )
+            : cc == null
+                ? const Center(child: CircularProgressIndicator())
+                : Chewie(controller: cc!),
       );
 }
