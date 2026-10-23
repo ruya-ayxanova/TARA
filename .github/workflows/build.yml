@@ -13,7 +13,7 @@ jobs:
           java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.4'
+          flutter-version: '3.32.8'
       - run: flutter create --platforms=android,ios --project-name tara .
       - name: Uygulama adini Tara yap ve INTERNET izni ekle
         run: |
